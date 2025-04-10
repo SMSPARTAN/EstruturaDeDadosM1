@@ -102,19 +102,6 @@ void Lde<T>::remover(T termoDePesquisa) {
 }
 
 // Search methods
-template <typename T>
-T& Lde<T>::operator[](T termoDePesquisa) {
-  No<T>* noDePesquisa = primeiroNo;
-  while(noDePesquisa != nullptr) {
-    if(noDePesquisa->dado == termoDePesquisa) {
-      return noDePesquisa->dado;
-    }
-
-    noDePesquisa = noDePesquisa->eloS;
-  }
-
-  throw std::out_of_range("Index out of Bounds -- No such object in list");
-}
 
 template <typename T>
 T& Lde<T>::operator[](int index) {
@@ -130,24 +117,36 @@ No<T>* noAtual = primeiroNo;
   return noAtual->dado;
 }
 
-template <typename T>
-const T& Lde<T>::operator[](int index) const {
-  if(index < 0 && index >= tamanhoLista) {
-    throw std::out_of_range("Index out of Bounds -- Operator");
+template<typename T>
+bool Lde::existe(T termoDePesquisa) {
+  No<T>* noDePesquisa = primeiroNo;
+  while(noDePesquisa != nullptr) {
+    if(noDePesquisa->dado == termoDePesquisa) {
+      return true;
+    }
+    noDePesquisa = noDePesquisa->eloS;
   }
 
-  No<T>* noAtual = primeiroNo;
-  for(int i = 0; i < tamanhoLista; i++) {
-    noAtual = noAtual->eloS;
+  return false;
+}
+
+template<typename T>
+int getIndex(T termoDePesquisa) {
+  No<T>* noDePesquisa = primeiroNo;
+  for(int i = 0; i < size; i++) {
+    if(noDePesquisa->dado == termoDePesquisa) {
+      return i;
+    }
+    noDePesquisa = noDePesquisa->eloS;
   }
 
-  return noAtual->dado;
+  throw std::out_of_range("Index out of Bounds -- getIndex");
 }
 
 template <typename T>
 No<T>* Lde<T>::getNo(int index) {
   if(index < 0 || index >= tamanhoLista) {
-    throw std::out_of_range("Index out of Bounds -- getnNo");
+    throw std::out_of_range("Index out of Bounds -- getNo");
   }
 
   No<T>* returnNo = primeiroNo;

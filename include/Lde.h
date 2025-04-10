@@ -21,9 +21,9 @@ public:
   void remover(T termoDePesquisa);
 
   // Search methods
-  T& operator[](T termoDePesquisa);
   T& operator[](int index);
-  const T& operator[](int index) const;
+  bool existe(T termoDePesquisa);
+  int getIndex(T termoDePesquisa);
   No<T>* getNo(int index);
   No<T>* getNo(T termoDePesquisa);
 
