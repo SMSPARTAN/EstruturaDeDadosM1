@@ -2,33 +2,33 @@
 
 #pragma once
 
-#include "Node.h"
+#include "No.h"
 #include <stdexcept>
 
 template <typename T>
 class Lde {
 private:
-  Node<T> *firstNode;
-  Node<T> *lastNode;
-  int listSize;
+  No<T> *primeiroNo;
+  No<T> *ultimoNo;
+  int tamanhoLista;
 
 public:
   Lde();
  
   // List I/O
-  void insert(T information);
-  void remove(int index);
-  void remove(T searchTerm);
+  void inserir(T dado);
+  void remover(int index);
+  void remover(T termoDePesquisa);
 
   // Search methods
-  T& operator[](T searchTerm);
+  T& operator[](T termoDePesquisa);
   T& operator[](int index);
   const T& operator[](int index) const;
-  Node<T>* getNode(int index);
-  Node<T>* getNode(T searchTerm);
+  No<T>* getNo(int index);
+  No<T>* getNo(T termoDePesquisa);
 
-  // List information
-  int size() const;
+  // List dado
+  int tamanho() const;
 };
 
 #include "../lib/Lde.cpp"

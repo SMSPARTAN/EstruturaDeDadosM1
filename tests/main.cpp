@@ -5,11 +5,11 @@
 
 int main() {
   Lde<std::string> lista;
-  lista.insert("Hello");
-  lista.insert(" ");
-  lista.insert("World!");
+  lista.inserir("Hello");
+  lista.inserir(" ");
+  lista.inserir("World!");
 
-  lista.remove(" ");
+  lista.remover(" ");
 
   std::cout << std::format("{}{}\n", lista[0], lista["World!"]);
 
