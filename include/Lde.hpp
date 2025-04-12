@@ -13,8 +13,6 @@ private:
 
   // Search method
   No<T>* getNo(int index);
-  No<T>* getNo(T pesquisa);
-
 public:
   Lde();
  

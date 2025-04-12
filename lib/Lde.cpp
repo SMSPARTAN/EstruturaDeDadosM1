@@ -70,38 +70,7 @@ void Lde<T>::remover(int index) {
 
 template <typename T>
 void Lde<T>::remover(T pesquisa) {
-  No<T> *noParaDeletar = this->getNo(pesquisa);
-  if(noParaDeletar == ultimoNo) {
-    ultimoNo = ultimoNo->eloA;
-    ultimoNo->eloS = nullptr;
-
-    noParaDeletar->eloA = nullptr;
-    noParaDeletar->eloS = nullptr;
-    delete noParaDeletar;  
-
-    return;
-  } else if (noParaDeletar == primeiroNo) {
-    primeiroNo = primeiroNo->eloS;
-    primeiroNo->eloA = nullptr;
-
-    noParaDeletar->eloS = nullptr;
-    delete noParaDeletar;
-
-    return;
-  }
-
-  No<T>* noAntecessor = noParaDeletar->eloA;
-  No<T>* noSucessor = noParaDeletar->eloS;
-
-  noAntecessor->eloS = noSucessor;
-  noSucessor->eloA = noAntecessor;
-
-  noParaDeletar->eloA = nullptr;
-  noParaDeletar->eloS = nullptr;
-
-  tamanhoLista--;
-
-  delete noParaDeletar;
+  this->remover(this->getIndex(pesquisa));
 }
 
 // Search methods
@@ -155,21 +124,6 @@ No<T>* Lde<T>::getNo(int index) {
   }
 
   return returnNo;
-}
-
-template <typename T>
-No<T>* Lde<T>::getNo(T pesquisa) {
-No<T>* returnNo = primeiroNo;
-
-while(returnNo != nullptr) {
-  if(returnNo->dado == pesquisa) {
-  return returnNo;
-  }
-
-  returnNo = returnNo->eloS;
-}
-
-  throw std::out_of_range("Index out of Bounds -- getNo(pesquisa)");
 }
 
 // List dado
