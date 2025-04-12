@@ -4,7 +4,7 @@
 
 template <typename T>
 class No {
-public:
+protected:
   No(T dado);
   No(No<T> *NoPtr);
   No(No<T> &copyNo);
