@@ -29,8 +29,8 @@ void ListaEstatica<T>::remover(int index) {
 }
 
 template<typename T>
-void ListaEstatica<T>::remover(T termoDePesquisa) {
-  this->remover(this->getIndex(termoDePesquisa));
+void ListaEstatica<T>::remover(T pesquisa) {
+  this->remover(this->getIndex(pesquisa));
 }
 
 // Search methods
@@ -44,9 +44,9 @@ T& ListaEstatica<T>::operator[](int index) {
 }
 
 template<typename T>
-bool ListaEstatica<T>::existe(T termoDePesquisa) {
+bool ListaEstatica<T>::existe(T pesquisa) {
   for(auto & elemento : array) {
-    if(elemento == termoDePesquisa) {
+    if(elemento == pesquisa) {
       return true;
     }
   }
@@ -55,10 +55,10 @@ bool ListaEstatica<T>::existe(T termoDePesquisa) {
 }
 
 template<typename T>
-int ListaEstatica<T>::getIndex(T termoDePesquisa) {
+int ListaEstatica<T>::getIndex(T pesquisa) {
   int index = 0;
   for(auto & elemento : array) {
-    if (elemento == termoDePesquisa) {
+    if (elemento == pesquisa) {
       return index;
     }
     index++;

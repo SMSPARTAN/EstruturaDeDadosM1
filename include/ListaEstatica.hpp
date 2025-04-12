@@ -15,12 +15,12 @@ public:
   // List I/O
   void inserir(T dado);
   void remover(int index);
-  void remover(T termoDePesquisa);
+  void remover(T pesquisa);
 
   // Search methods
   T& operator[](int index);
-  bool existe(T termoDePesquisa);
-  int getIndex(T termoDePesquisa);
+  bool existe(T pesquisa);
+  int getIndex(T pesquisa);
 
   // Lista data
   [[nodiscard]] int tamanho() const;
