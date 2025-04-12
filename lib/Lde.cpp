@@ -1,5 +1,7 @@
-// Implementação dos métodos de Lde.hpp
-#include "../include/Lde.h"
+// Implementação dos métodos de Lde.hpppp
+#pragma once
+
+#include "../include/Lde.hpp"
 
 template <typename T>
 Lde<T>::Lde() {
@@ -118,7 +120,7 @@ No<T>* noAtual = primeiroNo;
 }
 
 template<typename T>
-bool Lde::existe(T termoDePesquisa) {
+bool Lde<T>::existe(T termoDePesquisa) {
   No<T>* noDePesquisa = primeiroNo;
   while(noDePesquisa != nullptr) {
     if(noDePesquisa->dado == termoDePesquisa) {
@@ -131,9 +133,9 @@ bool Lde::existe(T termoDePesquisa) {
 }
 
 template<typename T>
-int getIndex(T termoDePesquisa) {
+int Lde<T>::getIndex(T termoDePesquisa) {
   No<T>* noDePesquisa = primeiroNo;
-  for(int i = 0; i < size; i++) {
+  for(int i = 0; i < tamanhoLista; i++) {
     if(noDePesquisa->dado == termoDePesquisa) {
       return i;
     }

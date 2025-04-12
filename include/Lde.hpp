@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "No.h"
+#include "No.hpp"
 #include <stdexcept>
 
 template <typename T>
@@ -11,6 +11,10 @@ private:
   No<T> *primeiroNo;
   No<T> *ultimoNo;
   int tamanhoLista;
+
+  // Search method
+  No<T>* getNo(int index);
+  No<T>* getNo(T termoDePesquisa);
 
 public:
   Lde();
@@ -24,11 +28,9 @@ public:
   T& operator[](int index);
   bool existe(T termoDePesquisa);
   int getIndex(T termoDePesquisa);
-  No<T>* getNo(int index);
-  No<T>* getNo(T termoDePesquisa);
 
   // List dado
-  int tamanho() const;
+  [[nodiscard]] int tamanho() const;
 };
 
 #include "../lib/Lde.cpp"

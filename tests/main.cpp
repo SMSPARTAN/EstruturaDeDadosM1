@@ -1,4 +1,4 @@
-#include "../include/Lde.h"
+#include "../include/Lde.hpp"
 
 #include <iostream>
 #include <format>
@@ -11,7 +11,7 @@ int main() {
 
   lista.remover(" ");
 
-  std::cout << std::format("{}{}\n", lista[0], lista["World!"]);
+  std::cout << std::format("{} {}", lista[0], lista[1]);
 
   return 0;
 }
