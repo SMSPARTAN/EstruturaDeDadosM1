@@ -3,7 +3,6 @@
 #pragma once
 
 #include "No.hpp"
-#include <stdexcept>
 
 template <typename T>
 class Lde {
@@ -14,7 +13,7 @@ private:
 
   // Search method
   No<T>* getNo(int index);
-  No<T>* getNo(T termoDePesquisa);
+  No<T>* getNo(T pesquisa);
 
 public:
   Lde();
@@ -22,14 +21,14 @@ public:
   // List I/O
   void inserir(T dado);
   void remover(int index);
-  void remover(T termoDePesquisa);
+  void remover(T pesquisa);
 
   // Search methods
   T& operator[](int index);
-  bool existe(T termoDePesquisa);
-  int getIndex(T termoDePesquisa);
+  bool existe(T pesquisa);
+  int getIndex(T pesquisa);
 
-  // List dado
+  // List data
   [[nodiscard]] int tamanho() const;
 };
 

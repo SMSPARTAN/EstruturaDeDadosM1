@@ -2,6 +2,7 @@
 #pragma once
 
 #include "../include/Lde.hpp"
+#include <stdexcept>
 
 template <typename T>
 Lde<T>::Lde() {
@@ -68,8 +69,8 @@ void Lde<T>::remover(int index) {
 }
 
 template <typename T>
-void Lde<T>::remover(T termoDePesquisa) {
-  No<T> *noParaDeletar = this->getNo(termoDePesquisa);
+void Lde<T>::remover(T pesquisa) {
+  No<T> *noParaDeletar = this->getNo(pesquisa);
   if(noParaDeletar == ultimoNo) {
     ultimoNo = ultimoNo->eloA;
     ultimoNo->eloS = nullptr;
@@ -120,23 +121,20 @@ No<T>* noAtual = primeiroNo;
 }
 
 template<typename T>
-bool Lde<T>::existe(T termoDePesquisa) {
-  No<T>* noDePesquisa = primeiroNo;
-  while(noDePesquisa != nullptr) {
-    if(noDePesquisa->dado == termoDePesquisa) {
-      return true;
-    }
-    noDePesquisa = noDePesquisa->eloS;
+bool Lde<T>::existe(T pesquisa) {
+  try {
+    this->getIndex(pesquisa);
+    return true;
+  } catch (std::out_of_range &_) {
+    return false;  
   }
-
-  return false;
 }
 
 template<typename T>
-int Lde<T>::getIndex(T termoDePesquisa) {
+int Lde<T>::getIndex(T pesquisa) {
   No<T>* noDePesquisa = primeiroNo;
   for(int i = 0; i < tamanhoLista; i++) {
-    if(noDePesquisa->dado == termoDePesquisa) {
+    if(noDePesquisa->dado == pesquisa) {
       return i;
     }
     noDePesquisa = noDePesquisa->eloS;
@@ -160,18 +158,18 @@ No<T>* Lde<T>::getNo(int index) {
 }
 
 template <typename T>
-No<T>* Lde<T>::getNo(T termoDePesquisa) {
+No<T>* Lde<T>::getNo(T pesquisa) {
 No<T>* returnNo = primeiroNo;
 
 while(returnNo != nullptr) {
-  if(returnNo->dado == termoDePesquisa) {
+  if(returnNo->dado == pesquisa) {
   return returnNo;
   }
 
   returnNo = returnNo->eloS;
 }
 
-  throw std::out_of_range("Index out of Bounds -- getNo(termoDePesquisa)");
+  throw std::out_of_range("Index out of Bounds -- getNo(pesquisa)");
 }
 
 // List dado
