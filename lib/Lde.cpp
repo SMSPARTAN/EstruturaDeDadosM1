@@ -1,4 +1,5 @@
-// Implementação dos métodos de Lde.hpppp
+// Samuel Sarno de Almeida, Lucas André Alexandre
+
 #pragma once
 
 #include "../include/Lde.hpp"
@@ -6,93 +7,93 @@
 
 template <typename T>
 Lde<T>::Lde() {
-  primeiroNo = nullptr;
-  ultimoNo = nullptr;
-  tamanhoLista = 0;
+  firstNode = nullptr;
+  lastNode = nullptr;
+  listSize = 0;
 }
 
 // List I/O
 template <typename T>
-void Lde<T>::inserir(T dado) {
-  No<T>* novoNo = new No<T>(dado);
+void Lde<T>::push_back(T data) {
+  Node<T>* newNode = new Node<T>(data);
 
-  if(primeiroNo == nullptr) {
-    primeiroNo = novoNo;
-    ultimoNo = novoNo;
+  if(firstNode == nullptr) {
+    firstNode = newNode;
+    lastNode = newNode;
   } else {
-    novoNo->eloA = ultimoNo;
-    ultimoNo->eloS = novoNo;
-    ultimoNo = novoNo;
+    newNode->Plink = lastNode;
+    lastNode->Nlink = newNode;
+    lastNode = newNode;
   }
 
-  tamanhoLista++;
+  listSize++;
 }
 
 template <typename T>
-void Lde<T>::remover(int index) {
-  if(index < 0 || index >= tamanhoLista) {
-    throw std::out_of_range("Index out of Bounds -- remover");
+void Lde<T>::remove(int index) {
+  if(index < 0 || index >= listSize) {
+    throw std::out_of_range("Index out of Bounds -- remove");
   }
 
-  No<T> *noParaDeletar = this->getNo(index);
-  if(index == tamanhoLista - 1) {
-    ultimoNo = ultimoNo->eloA;
-    ultimoNo->eloS = nullptr;
+  Node<T> *nodeToDelete = this->getNode(index);
+  if(index == listSize - 1) {
+    lastNode = lastNode->Plink;
+    lastNode->Nlink = nullptr;
 
-    noParaDeletar->eloA = nullptr;
-    noParaDeletar->eloS = nullptr;
-    delete noParaDeletar;  
+    nodeToDelete->Plink = nullptr;
+    nodeToDelete->Nlink = nullptr;
+    delete nodeToDelete;  
 
     return;
   } else if (index == 0) {
-    primeiroNo = primeiroNo->eloS;
-    primeiroNo->eloA = nullptr;
+    firstNode = firstNode->Nlink;
+    firstNode->Plink = nullptr;
 
-    noParaDeletar->eloS = nullptr;
-    delete noParaDeletar;
+    nodeToDelete->Nlink = nullptr;
+    delete nodeToDelete;
 
     return;
   }
 
-  No<T>* noAntecessor = noParaDeletar->eloA;
-  No<T>* noSucessor = noParaDeletar->eloS;
+  Node<T>* noAntecessor = nodeToDelete->Plink;
+  Node<T>* noSucessor = nodeToDelete->Nlink;
 
-  noAntecessor->eloS = noSucessor;
-  noSucessor->eloA = noAntecessor;
+  noAntecessor->Nlink = noSucessor;
+  noSucessor->Plink = noAntecessor;
 
-  noParaDeletar->eloA = nullptr;
-  noParaDeletar->eloS = nullptr;
+  nodeToDelete->Plink = nullptr;
+  nodeToDelete->Nlink = nullptr;
 
-  tamanhoLista--;
+  listSize--;
 
-  delete noParaDeletar;
+  delete nodeToDelete;
 }
 
 template <typename T>
-void Lde<T>::remover(T pesquisa) {
-  this->remover(this->getIndex(pesquisa));
+void Lde<T>::remove(T search) {
+  this->remove(this->getIndex(search));
 }
 
 // Search methods
 
 template <typename T>
 T& Lde<T>::operator[](int index) {
-  if(index < 0 || index >= tamanhoLista) {
+  if(index < 0 || index >= listSize) {
     throw std::out_of_range("Index out of Bounds -- Operator");
   }
 
-No<T>* noAtual = primeiroNo;
+Node<T>* noAtual = firstNode;
   for(int i = 0; i < index; i++) {
-   noAtual = noAtual->eloS;
+   noAtual = noAtual->Nlink;
   }
 
-  return noAtual->dado;
+  return noAtual->data;
 }
 
 template<typename T>
-bool Lde<T>::existe(T pesquisa) {
+bool Lde<T>::exists(T search) {
   try {
-    this->getIndex(pesquisa);
+    this->getIndex(search);
     return true;
   } catch (std::out_of_range &_) {
     return false;  
@@ -100,34 +101,34 @@ bool Lde<T>::existe(T pesquisa) {
 }
 
 template<typename T>
-int Lde<T>::getIndex(T pesquisa) {
-  No<T>* noDePesquisa = primeiroNo;
-  for(int i = 0; i < tamanhoLista; i++) {
-    if(noDePesquisa->dado == pesquisa) {
+int Lde<T>::getIndex(T search) {
+  Node<T>* searchNode = firstNode;
+  for(int i = 0; i < listSize; i++) {
+    if(searchNode->data == search) {
       return i;
     }
-    noDePesquisa = noDePesquisa->eloS;
+    searchNode = searchNode->Nlink;
   }
 
   throw std::out_of_range("Index out of Bounds -- getIndex");
 }
 
 template <typename T>
-No<T>* Lde<T>::getNo(int index) {
-  if(index < 0 || index >= tamanhoLista) {
-    throw std::out_of_range("Index out of Bounds -- getNo");
+Node<T>* Lde<T>::getNode(int index) {
+  if(index < 0 || index >= listSize) {
+    throw std::out_of_range("Index out of Bounds -- getNode");
   }
 
-  No<T>* returnNo = primeiroNo;
+  Node<T>* returnNode = firstNode;
   for(int i = 0; i < index; i++) {
-    returnNo = returnNo->eloS;
+    returnNode = returnNode->Nlink;
   }
 
-  return returnNo;
+  return returnNode;
 }
 
-// List dado
+// List data
 template <typename T>
-int Lde<T>::tamanho() const {
-  return tamanhoLista;
+int Lde<T>::size() const {
+  return listSize;
 }

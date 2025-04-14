@@ -1,3 +1,5 @@
+// Samuel Sarno de Almeida, Lucas André Alexandre
+
 #include "../include/Lde.hpp"
 
 #include <iostream>
@@ -5,11 +7,11 @@
 
 int main() {
   Lde<std::string> lista;
-  lista.inserir("Hello");
-  lista.inserir(" ");
-  lista.inserir("World!");
+  lista.push_back("Hello");
+  lista.push_back(" ");
+  lista.push_back("World!");
 
-  lista.remover(" ");
+  lista.remove(" ");
 
   std::cout << std::format("{} {}", lista[0], lista[1]);
 

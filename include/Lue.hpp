@@ -1,27 +1,31 @@
+// Samuel Sarno de Almeida, Lucas André Alexandre
+
 #pragma once
 
-#include "No.hpp"
+#include "Node.hpp"
 
 template<typename T>
 class Lue {
 private:
-  No<T> *primeiroNo;
-  No<T> *ultimoNo;
-  int tamanhoLista;
-  No<T>* getNo(int index);
+  Node<T> *firstNode;
+  Node<T> *lastNode;
+  int listSize;
+  Node<T>* getNode(int index);
 public:
   Lue();
 
   // List I/O
-  void inserir(T dado);
-  void remover(int index);
-  void remover(T pesquisa);
+  void push_back(T data);
+  void remove(int index);
+  void remove(T search);
 
   // Search methods
   T& operator[](int index);
-  bool existe(T pesquisa);
-  int getIndex(T pesquisa);
+  bool exists(T search);
+  int getIndex(T search);
 
   // List data
-  [[nodiscard]] int tamanho() const;
+  [[nodiscard]] int size() const;
 };
+
+#include "../lib/Lue.cpp"

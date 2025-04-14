@@ -1,3 +1,5 @@
+// Samuel Sarno de Almeida, Lucas André Alexandre
+
 #pragma once
 
 #include "../include/Lue.hpp"
@@ -5,83 +7,83 @@
 
 template<typename T>
 Lue<T>::Lue() {
-  primeiroNo = nullptr;
-  ultimoNo = nullptr;
-  tamanhoLista = 0;
+  firstNode = nullptr;
+  lastNode = nullptr;
+  listSize = 0;
 }
 
 // List I/O
 template<typename T>
-void Lue<T>::inserir(T dado) {
-  auto* novoNo = new No<T>(dado);
+void Lue<T>::push_back(T data) {
+  auto* newNode = new Node<T>(data);
 
-  if(primeiroNo == nullptr) {
-    primeiroNo = novoNo;
-    ultimoNo = novoNo;
+  if(firstNode == nullptr) {
+    firstNode = newNode;
+    lastNode = newNode;
   } else {
-    ultimoNo->eloS = novoNo;
-    ultimoNo = novoNo;
+    lastNode->Nlink = newNode;
+    lastNode = newNode;
   }
 
-  tamanhoLista++;
+  listSize++;
 }
 
 template<typename T>
-void Lue<T>::remover(int index) {
-  if(index < 0 || index >= tamanhoLista) {
-    throw std::out_of_range("Index out of Bounds - remover");
+void Lue<T>::remove(int index) {
+  if(index < 0 || index >= listSize) {
+    throw std::out_of_range("Index out of Bounds - remove");
   }
 
-  No<T>* noParaDeletar = this->getNo(index);
-  if(index == tamanhoLista - 1) {
-    ultimoNo = this->getNo(index - 1);
-    ultimoNo->eloS = nullptr;
+  Node<T>* nodeToDelete = this->getNode(index);
+  if(index == listSize - 1) {
+    lastNode = this->getNode(index - 1);
+    lastNode->Nlink = nullptr;
 
-    noParaDeletar->eloS = nullptr;
-    delete noParaDeletar;
+    nodeToDelete->Nlink = nullptr;
+    delete nodeToDelete;
 
     return;
   } else if (index == 0) {
-    primeiroNo = this->getNo(index + 1);
+    firstNode = this->getNode(index + 1);
     
-    noParaDeletar->eloS = nullptr;
-    delete noParaDeletar;
+    nodeToDelete->Nlink = nullptr;
+    delete nodeToDelete;
 
     return;
   }
 
-  this->getNo(index - 1) = noParaDeletar->eloS;
+  this->getNode(index - 1) = nodeToDelete->Nlink;
 
-  noParaDeletar->eloS = nullptr;
-  delete noParaDeletar;
+  nodeToDelete->Nlink = nullptr;
+  delete nodeToDelete;
 
-  tamanhoLista--;
+  listSize--;
 } 
 
 template<typename T>
-void Lue<T>::remover(T pesquisa) {
-  this->remover(this->getIndex(pesquisa));
+void Lue<T>::remove(T search) {
+  this->remove(this->getIndex(search));
 }
 
 // Search methods
 template<typename T>
 T& Lue<T>::operator[](int index) {
-  if(index < 0 || index >= tamanhoLista) {
+  if(index < 0 || index >= listSize) {
     throw std::out_of_range("Index out of Bounds - operator");
   }
 
-  No<T>* noDePesquisa = primeiroNo;
+  Node<T>* searchNode = firstNode;
   for(int i = 0; i < index; i++) {
-    noDePesquisa = noDePesquisa->eloS;
+    searchNode = searchNode->Nlink;
   }
 
-  return noDePesquisa->dado;
+  return searchNode->data;
 }
 
 template<typename T>
-bool Lue<T>::existe(T pesquisa) {
+bool Lue<T>::exists(T search) {
   try {
-    this->getIndex(pesquisa);
+    this->getIndex(search);
     return true;
   } catch (std::out_of_range &_) {
     return false;
@@ -89,31 +91,31 @@ bool Lue<T>::existe(T pesquisa) {
 }
 
 template<typename T>
-int Lue<T>::getIndex(T pesquisa) {
-  No<T>* noDePesquisa = primeiroNo;
+int Lue<T>::getIndex(T search) {
+  Node<T>* searchNode = firstNode;
 
-  for(int i = 0; i < tamanhoLista; i++) {
-    if (noDePesquisa->dado == pesquisa) {
-      return noDePesquisa->dado;
+  for(int i = 0; i < listSize; i++) {
+    if (searchNode->data == search) {
+      return searchNode->data;
     }
-    noDePesquisa = noDePesquisa->eloS;
+    searchNode = searchNode->Nlink;
   }
 }
 
 template <typename T>
-No<T>* Lue<T>::getNo(int index) {
-  if(index < 0 || index >= tamanhoLista) {
-    throw std::out_of_range("Index out of Bounds -- getNo");
+Node<T>* Lue<T>::getNode(int index) {
+  if(index < 0 || index >= listSize) {
+    throw std::out_of_range("Index out of Bounds -- getNode");
   }
 
-  No<T>* returnNo = primeiroNo;
+  Node<T>* returnNode = firstNode;
   for(int i = 0; i < index; i++) {
-    returnNo = returnNo->eloS;
+    returnNode = returnNode->Nlink;
   }
 
-  return returnNo;
+  return returnNode;
 }
 
 // List data
 template<typename T>
-int Lue<T>::tamanho() const { return tamanhoLista; };
+int Lue<T>::size() const { return listSize; };

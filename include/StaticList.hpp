@@ -2,20 +2,16 @@
 
 #pragma once
 
-#include "Node.hpp"
+#define MAX_SIZE 28
 
-template <typename T>
-class Lde {
+template<typename T>
+class StaticList {
 private:
-  Node<T> *firstNode;
-  Node<T> *lastNode;
-  int listSize;
-
-  // Search method
-  Node<T>* getNode(int index);
+  T array[MAX_SIZE];
+  int lastPos;
 public:
-  Lde();
- 
+  StaticList() : lastPos(0) {}
+  
   // List I/O
   void push_back(T data);
   void remove(int index);
@@ -26,8 +22,8 @@ public:
   bool exists(T search);
   int getIndex(T search);
 
-  // List data
+  // Lista data
   [[nodiscard]] int size() const;
 };
 
-#include "../lib/Lde.cpp"
+#include "../lib/StaticList.cpp"
