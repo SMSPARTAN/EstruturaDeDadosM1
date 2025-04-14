@@ -65,25 +65,27 @@ void DominoUI::printResults(const Game &game) {
 }
 
 // Função adicional para exibir estado durante o jogo
-void DominoUI::printGameState(const Game& game) {
+void DominoUI::printGameState(const Game &game) {
   cout << "\n=== ESTADO ATUAL ==="
        << "\nPeças no monte: " << game.getBoneyard().size()
-       << "\nExtremidades: " << game.getBoard().getLeftEnd() 
+       << "\nExtremidades: " << game.getBoard().getLeftEnd()
        << " | " << game.getBoard().getRightEnd()
        << "\nPróximo jogador: " << game.getCurrentPlayerIndex()
        << "\nMesa: ";
-  
-  const auto& boardState = game.getBoard().getBoardState();
-  if(boardState.empty()) {
-      cout << "Vazia";
+
+  const auto &boardState = game.getBoard().getBoardState();
+  if (boardState.empty()) {
+    cout << "Vazia";
   } else {
-      // Exibir no máximo 10 peças por linha
-      int count = 0;
-      for(int i = 0; i < boardState.size(); i++) {
-          cout << boardState[i];
-          if(++count % 10 == 0) cout << "\n      ";
-          else cout << " ";
-      }
+    // Exibir no máximo 10 peças por linha
+    int count = 0;
+    for (int i = 0; i < boardState.size(); i++) {
+      cout << boardState[i];
+      if (++count % 10 == 0)
+        cout << "\n      ";
+      else
+        cout << " ";
+    }
   }
   cout << endl;
 }
@@ -98,47 +100,48 @@ void DominoUI::printHelp() {
        << "• s       - Exibir estado atual\n";
 }
 
-bool DominoUI::processInput(Game& game) {
+bool DominoUI::processInput(Game &game) {
   char input = '\0';
-  
-  cout << "\n> Pressione Enter para continuar ou 'h' para ajuda...";
-  
+
+  cout << "\n> Pressione 'c' para continuar ou 'h' para ajuda...";
+
   // Limpa quaisquer erros anteriores e buffers
   cin.clear();
-  
+  // cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
   // Lê o input do usuário
   cin.get(input);
-  
-  // Limpa o buffer APÓS a leitura
-  if(input != '\n') {
+
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+  switch (input) {
+  case 'q':
+    return false;
+  case 'h':
+    printHelp();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    break;
+  case 'l':
+    printLog(game.getLog());
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    break;
+  case 's':
+    printGameState(game);
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    break;
+  case 'c':
+    break;
+  default:
+    cout << "Comando inválido! Use 'h' para ajuda.\n";
   }
 
-  switch(input) {
-      case 'q': 
-          return false;
-      case 'h': 
-          printHelp();
-          break;
-      case 'l': 
-          printLog(game.getLog()); 
-          break;
-      case 's': 
-          printGameState(game); 
-          break;
-      case '\n':  // Enter pressionado
-          break;
-      default:
-          cout << "Comando inválido! Use 'h' para ajuda.\n";
-  }
-  
   return true;
 }
 
 void DominoUI::clearScreen() {
-  #ifdef _WIN32
-      system("cls");
-  #else
-      system("clear");
-  #endif
+#ifdef _WIN32
+  system("cls");
+#else
+  system("clear");
+#endif
 }

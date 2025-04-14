@@ -4,6 +4,3 @@
 tests/build/Debug/main.o
 tests/build/Debug/outDebug
 tets/build
-.clang-format
-.clang-tidy
-.clangd
