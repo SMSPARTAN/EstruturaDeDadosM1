@@ -13,6 +13,7 @@ void StaticList<T>::push_back(T data) {
   }
 
   array[lastPos] = data;
+  lastPos++;
 }
 
 template<typename T>
@@ -36,6 +37,15 @@ void StaticList<T>::remove(T search) {
 // Search methods
 template <typename T>
 T& StaticList<T>::operator[](int index) {
+  if(index < 0 || index >= lastPos) {
+    throw std::out_of_range("Index out of Bounds -- operator");
+  }
+
+  return array[index];
+}
+
+template <typename T>
+const T& StaticList<T>::operator[](int index) const {
   if(index < 0 || index >= lastPos) {
     throw std::out_of_range("Index out of Bounds -- operator");
   }

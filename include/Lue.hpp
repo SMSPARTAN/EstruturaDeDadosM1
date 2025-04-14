@@ -21,11 +21,13 @@ public:
 
   // Search methods
   T& operator[](int index);
+  T& operator[](int index) const;
   bool exists(T search);
+  bool exists(T search) const;
   int getIndex(T search);
 
   // List data
-  [[nodiscard]] int size() const;
+  int size() const;
 };
 
 #include "../lib/Lue.cpp"

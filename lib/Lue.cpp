@@ -15,7 +15,7 @@ Lue<T>::Lue() {
 // List I/O
 template<typename T>
 void Lue<T>::push_back(T data) {
-  auto* newNode = new Node<T>(data);
+  Node<T>* newNode = new Node<T>(data);
 
   if(firstNode == nullptr) {
     firstNode = newNode;
@@ -81,7 +81,31 @@ T& Lue<T>::operator[](int index) {
 }
 
 template<typename T>
+T& Lue<T>::operator[](int index) const {
+  if(index < 0 || index >= listSize) {
+    throw std::out_of_range("Index out of Bounds - operator");
+  }
+
+  Node<T>* searchNode = firstNode;
+  for(int i = 0; i < index; i++) {
+    searchNode = searchNode->Nlink;
+  }
+
+  return searchNode->data;
+}
+
+template<typename T>
 bool Lue<T>::exists(T search) {
+  try {
+    this->getIndex(search);
+    return true;
+  } catch (std::out_of_range &_) {
+    return false;
+  }
+}
+
+template<typename T>
+bool Lue<T>::exists(T search) const {
   try {
     this->getIndex(search);
     return true;

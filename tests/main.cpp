@@ -1,19 +1,36 @@
 // Samuel Sarno de Almeida, Lucas André Alexandre
 
-#include "../include/Lde.hpp"
-
-#include <iostream>
-#include <format>
+#include "../include/DominoUI.hpp"
+#include "../include/Game.hpp"
 
 int main() {
-  Lde<std::string> lista;
-  lista.push_back("Hello");
-  lista.push_back(" ");
-  lista.push_back("World!");
+  DominoUI::printWelcome();
 
-  lista.remove(" ");
+  try {
+    Game game(4);
+    game.distributePieces();
 
-  std::cout << std::format("{} {}", lista[0], lista[1]);
+    bool continueGame = true;
+    while (continueGame && !game.isGameOver()) {
+      continueGame = DominoUI::processInput(game);
+      if (continueGame) {
+        game.playTurn();
+
+        // Exibe o log atualizado
+        DominoUI::clearScreen();
+        game.printLastLogEntry();
+        DominoUI::printGameState(game);
+      }
+    }
+
+    DominoUI::printLog(game.getLog());
+    DominoUI::printResults(game);
+
+  } catch (const std::exception &e) {
+    std::cerr << "Erro fatal: " << e.what() << std::endl;
+  } catch (...) {
+    std::cerr << "Erro desconhecido!" << std::endl;
+  }
 
   return 0;
 }

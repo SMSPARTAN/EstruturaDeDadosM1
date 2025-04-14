@@ -19,6 +19,7 @@ public:
 
   // Search methods
   T& operator[](int index);
+  const T& operator[](int index) const;
   bool exists(T search);
   int getIndex(T search);
 

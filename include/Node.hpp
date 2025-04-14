@@ -4,9 +4,9 @@
 
 template <typename T>
 class Node {
-protected:
-  Node(T data);
-  Node(Node<T> *NoPtr);
+public:
+  explicit Node(T data);
+  explicit Node(Node<T> *NoPtr);
   Node(Node<T> &copyNode);
 
   T data;

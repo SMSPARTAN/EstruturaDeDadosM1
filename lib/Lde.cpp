@@ -75,9 +75,22 @@ void Lde<T>::remove(T search) {
 }
 
 // Search methods
-
 template <typename T>
 T& Lde<T>::operator[](int index) {
+  if(index < 0 || index >= listSize) {
+    throw std::out_of_range("Index out of Bounds -- Operator");
+  }
+
+Node<T>* noAtual = firstNode;
+  for(int i = 0; i < index; i++) {
+   noAtual = noAtual->Nlink;
+  }
+
+  return noAtual->data;
+}
+
+template <typename T>
+T& Lde<T>::operator[](int index) const {
   if(index < 0 || index >= listSize) {
     throw std::out_of_range("Index out of Bounds -- Operator");
   }
@@ -101,7 +114,30 @@ bool Lde<T>::exists(T search) {
 }
 
 template<typename T>
+bool Lde<T>::exists(T search) const {
+  try {
+    this->getIndex(search);
+    return true;
+  } catch (std::out_of_range &_) {
+    return false;  
+  }
+}
+
+template<typename T>
 int Lde<T>::getIndex(T search) {
+  Node<T>* searchNode = firstNode;
+  for(int i = 0; i < listSize; i++) {
+    if(searchNode->data == search) {
+      return i;
+    }
+    searchNode = searchNode->Nlink;
+  }
+
+  throw std::out_of_range("Index out of Bounds -- getIndex");
+}
+
+template<typename T>
+int Lde<T>::getIndex(T search) const {
   Node<T>* searchNode = firstNode;
   for(int i = 0; i < listSize; i++) {
     if(searchNode->data == search) {
