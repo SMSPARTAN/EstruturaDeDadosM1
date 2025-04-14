@@ -2,7 +2,7 @@
 
 #pragma once
 
-#define MAX_TAM 100
+#define MAX_TAM 28
 
 template<typename T>
 class ListaEstatica {
